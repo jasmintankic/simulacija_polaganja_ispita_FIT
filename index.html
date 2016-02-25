@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html ng-app="SimulacijaIspita">
+
+<head>
+    <script data-require="angular.js@*" data-semver="1.3.0-beta.5" src="angular.min.js">
+    </script>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="script.js"></script>
+</head>
+
+<body ng-controller="MainController">
+    <h1 class="header-position">Simulacija polaganja ispita</h1>
+    <div class="professor-container">
+        <img class="professor-image-position" src="css/source/profesor.png">
+        <div class="exam-container">
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{ispitNastava}}%;">
+                    {{ispitNastava | number: 0}}%
+                </div>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{ispitKnjiga}}%;">
+                    {{ispitKnjiga | number: 0}}%
+                </div>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{ispitDL}}%;">
+                    {{ispitDL | number: 0}}%
+                </div>
+            </div>
+            <div class="progress progress-custom">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{ispitVideo}}%;">
+                    {{ispitVideo | number: 0}}%
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group profesor-input-field">
+            <input type="number" ng-model="professorNastava" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon professor-label" id="basic-addon2">Nastava</span>
+        </div>
+        <div class="input-group profesor-input-field">
+            <input type="number" ng-model="professorKnjiga" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon professor-label" id="basic-addon2">Knjiga</span>
+        </div>
+        <div class="input-group profesor-input-field">
+            <input type="number" ng-model="professorDL" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon professor-label" id="basic-addon2">DL materijali</span>
+        </div>
+        <div class="input-group profesor-input-field">
+            <input type="number" ng-model="professorVideo" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon professor-label" id="basic-addon2">Video materijali</span>
+        </div>
+        <div class="label label-default profesor-name">PROFESOR</div>
+        <div class="prof-buttons-container">
+        <button type="button" ng-click="startujSimulaciju()" class="btn btn-success buttons-position-prof">Kreirajte ispit</button>
+        <button type="button" ng-click="randomIspit()" class="btn btn-success">Random ispit</button>        	
+
+        <button type="button" ng-click="pokreniRandomSimulaciju()" class="btn btn-warning automatik">Automatsko generisanje</button>
+        </div>
+
+
+    </div>
+    <div class="professor-message-container" ng-show="!showExam">
+        <div class="alert alert-success" role="alert">Navedeni atributi nastavnika predstavljaju deskriptore procesa poducavanja, koje on koristi za pripremu nastave. Na osnovu tih atributa generise se ispit koji studenti trebaju polagati.<b> Napomena: Atributi se unose od 0 do 10. Ne unosite specijalne karaktere, brojeve vece od 10 ili manje od 0.</b></div>
+        <div class="alert alert-info" role="alert">Desni narandzasti button "Automtasko generisanje" ce kreirati automatski(random) sve ucesnike u simulaciji. Zeleni buttoni sluze za rucno ili random generisanje atributa za odabranog ucesnika u simulaciji.</div>
+    </div>
+    <div class="students-main-container" ng-show="showExam">
+
+        <div class="student-container">
+
+            <img class="student-profile" src="css/source/student1.png">
+            <div class="exam">
+                <div class="student-exam-final-info ">
+                    <div class="student-2-exam-paper student-1-pen-color">Ocjena:&nbsp;{{ocjena}}</div>
+                    <div class="student-2-exam-paper student-2-points student-1-pen-color">Bodovi:&nbsp;{{bodovi1}}</div>
+                    <img class="exam-result-icon" ng-show="studentPao" src="css/source/pad.png">
+                    <img class="exam-result-icon" ng-show="studentProlaz" src="css/source/prolaz.png">
+
+                </div>
+                <div class="progress exam-progress-bar">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{rezultatiIspita1}}%;"> {{bodovi1}}%
+                    </div>
+                </div>
+            </div>
+            <div class="student-controls-container">
+
+                <div class="input-group profesor-input-field">
+                    <input type="number" ng-model="student1Knjiga" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                    <span class="input-group-addon professor-label" id="basic-addon2">Knjiga</span>
+                </div>
+                <div class="input-group profesor-input-field">
+                    <input type="number" ng-model="student1DLMaterijali" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                    <span class="input-group-addon professor-label" id="basic-addon2">DL materijali</span>
+                </div>
+                <div class="input-group profesor-input-field">
+                    <input type="number" ng-model="student1VideoMaterijali" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                    <span class="input-group-addon professor-label" id="basic-addon2">Video materijali</span>
+                </div>
+                <div class="input-group profesor-input-field">
+                    <input type="number" ng-model="student1Prisustvo" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                    <span class="input-group-addon professor-label" id="basic-addon2">Prisustvo</span>
+                </div>
+                <div class="input-group profesor-input-field">
+                    <input type="number" ng-model="student1Koncentracija" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                    <span class="input-group-addon professor-label" id="basic-addon2">Koncentracija</span>
+                </div>
+            </div>
+
+
+            <span class="label label-success student-name">STUDENT 1</span>
+            <div class="student-buttons-container">
+             <button type="button" ng-click="student1SimuliranjeIspita(student1DLMaterijali,student1VideoMaterijali,student1Prisustvo,student1Koncentracija,student1Knjiga)" class="btn btn-success">Simulirajte ispit</button>  
+             <button type="button" ng-click="randomStudent1()" class="btn btn-success">Random student</button>          	
+            </div>            
+        </div>
+        <div class="student-container">
+            <img class="student-profile" src="css/source/student2.png">
+            <div class="exam">
+                <div class="student-exam-final-info">
+                    <div class="student-2-exam-paper">Ocjena:&nbsp;{{ocjena2}}</div>
+                    <div class="student-2-exam-paper student-2-points">Bodovi:&nbsp;{{bodovi2}}</div>
+                    <img class="exam-result-icon" ng-show="studentPao2" src="css/source/pad.png">
+                    <img class="exam-result-icon" ng-show="studentProlaz2" src="css/source/prolaz.png">
+                </div>
+                <div class="progress exam-progress-bar">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-attr-style="width: {{rezultatiIspita2}}%;"> {{bodovi2}}%
+                    </div>
+                </div>
+            </div>
+            <div class="student-controls-container">
+                <div>
+                    <div class="input-group profesor-input-field">
+                        <input type="number" ng-model="student2Knjiga" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                        <span class="input-group-addon professor-label" id="basic-addon2">Knjiga</span>
+                    </div>
+                    <div class="input-group profesor-input-field">
+                        <input type="number" ng-model="student2DLMaterijali" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                        <span class="input-group-addon professor-label" id="basic-addon2">DL materijali</span>
+                    </div>
+                    <div class="input-group profesor-input-field">
+                        <input type="number" ng-model="student2VideoMaterijali" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                        <span class="input-group-addon professor-label" id="basic-addon2">Video materijali</span>
+                    </div>
+                    <div class="input-group profesor-input-field">
+                        <input type="number" ng-model="student2Prisustvo" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                        <span class="input-group-addon professor-label" id="basic-addon2">Prisustvo</span>
+                    </div>
+                    <div class="input-group profesor-input-field">
+                        <input type="number" ng-model="student2Koncentracija" class="form-control" min="0" max="10" aria-describedby="basic-addon2">
+                        <span class="input-group-addon professor-label" id="basic-addon2">Koncentracija</span>
+                    </div>
+                </div>
+            </div>
+            <span class="label label-primary student-name">STUDENT 2</span>
+            <div class="student-buttons-container">
+             <button type="button" ng-click="student2SimuliranjeIspita(student2DLMaterijali,student2VideoMaterijali,student2Prisustvo,student2Koncentracija,student2Knjiga)" class="btn btn-success">Simulirajte ispit</button>  
+             <button type="button" ng-click="randomStudent2()" class="btn btn-success">Random student</button>          	
+            </div>
+
+        </div>
+    </div>
+    <div class="student-message" ng-show="showExam">
+        <div class="alert alert-success" role="alert">Deskriptori na strani studenta i njihov procentualni udio opisuju nacin na koji se student priprema za polaganje ispita. </div>
+
+    </div>
+
+</body>
+
+</html>
