@@ -91,12 +91,10 @@
 			if(prisustvo === 0 && koncentracija>=1) {
 				nastavaUcenje = 0;
 				nastava = 0;
-				//$scope.rezultatiIspita = nastavaUcenje + ucenjeVideo + ucenjeDL + ucenjeKnjiga;
 			}
 			if(koncentracija===0) {
 				nastavaUcenje = 0;
 				nastava = 0;
-				//$scope.rezultatiIspita = nastavaUcenje + ucenjeVideo + ucenjeDL + ucenjeKnjiga;
 			}
 
 			$scope.rezultatiIspita1 = nastavaUcenje + ucenjeVideo + ucenjeDL + ucenjeKnjiga;
@@ -133,10 +131,6 @@
 				$scope.studentProlaz = true;
 				$scope.studentPao = false;
 			}
-
-
-			console.log(rezultat1);
-
 		};
 
 		$scope.student2SimuliranjeIspita = function (dl, video, prisustvo, koncentracija, knjiga) {
@@ -193,8 +187,6 @@
 				$scope.studentProlaz2 = true;
 				$scope.studentPao2 = false;
 			}
-			console.log(rezultat2);
-
 		};
 
 
