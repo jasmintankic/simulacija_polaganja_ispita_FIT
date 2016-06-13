@@ -1,10 +1,2 @@
 # simulacija_polaganja_ispita_FIT
-Praktični dio predmeta "Modeliranje i simulacije" (FIT 1. godina mastera) je “role playing” simulacija, 
-koja sadrži 3 učesnika u simulaciji: profesor, student i ispit. Krajnji cilj simulacije su rezultati ispita, 
-odnosno koliko je student ostvario bodova na ispitu i koju je ocjenu dobio. Ova simulacija je rađena po klasičnom “role playing” modelu. 
-Svaki učesnik u simulaciji posjeduje određene parametre koji opisuju tog učesnika i na osnovu kojih se generišu rezultati.
-
-Autori rada: Jasmin Tankic, Imad Muratspahic, Sanid Tipura <br>
-Algoritam simulacije: Jasmin Tankic, Jasmin Salihović
-
-Aplikaciji se može pristupiti sa linka: http://ispit.is-great.net/
+http://ispit.is-great.net/
